@@ -1,0 +1,915 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{DB0201EN-Week4-1-1-Analyzing-2-py}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    Lab: Working with a real world data-set using SQL and Python
+
+    \section{Introduction}\label{introduction}
+
+This notebook shows how to work with a real world dataset using SQL and
+Python. In this lab you will: 1. Understand the dataset for Chicago
+Public School level performance 1. Store the dataset in an Db2 database
+on IBM Cloud instance 1. Retrieve metadata about tables and columns and
+query data from mixed case columns 1. Solve example problems to practice
+your SQL skills including using built-in database functions
+
+    \subsection{Chicago Public Schools - Progress Report Cards
+(2011-2012)}\label{chicago-public-schools---progress-report-cards-2011-2012}
+
+The city of Chicago released a dataset showing all school level
+performance data used to create School Report Cards for the 2011-2012
+school year. The dataset is available from the Chicago Data Portal:
+https://data.cityofchicago.org/Education/Chicago-Public-Schools-Progress-Report-Cards-2011-/9xs2-f89t
+
+This dataset includes a large number of metrics. Start by familiarizing
+yourself with the types of metrics in the database:
+https://data.cityofchicago.org/api/assets/AAD41A13-BE8A-4E67-B1F5-86E711E09D5F?download=true
+
+Now download a static copy of this database and review some of its
+contents:
+https://ibm.box.com/shared/static/0g7kbanvn5l2gt2qu38ukooatnjqyuys.csv
+
+    \subsubsection{Store the dataset in a
+Table}\label{store-the-dataset-in-a-table}
+
+In many cases the dataset to be analyzed is available as a .CSV (comma
+separated values) file, perhaps on the internet. To analyze the data
+using SQL, it first needs to be stored in the database.
+
+While it is easier to read the dataset into a Pandas dataframe and then
+PERSIST it into the database as we saw in the previous lab, it results
+in mapping to default datatypes which may not be optimal for SQL
+querying. For example a long textual field may map to a CLOB instead of
+a VARCHAR.
+
+Therefore, \textbf{it is highly recommended to manually load the table
+using the database console LOAD tool, as indicated in Week 2 Lab 1 Part
+II}. The only difference with that lab is that in Step 5 of the
+instructions you will need to click on create "(+) New Table" and
+specify the name of the table you want to create and then click "Next".
+
+\subparagraph{\texorpdfstring{Now open the Db2 console, open the LOAD
+tool, Select / Drag the .CSV file for the CHICAGO PUBLIC SCHOOLS dataset
+and load the dataset into a new table called
+\textbf{SCHOOLS}.}{Now open the Db2 console, open the LOAD tool, Select / Drag the .CSV file for the CHICAGO PUBLIC SCHOOLS dataset and load the dataset into a new table called SCHOOLS.}}\label{now-open-the-db2-console-open-the-load-tool-select-drag-the-.csv-file-for-the-chicago-public-schools-dataset-and-load-the-dataset-into-a-new-table-called-schools.}
+
+    \subsubsection{Connect to the database}\label{connect-to-the-database}
+
+Let us now load the ipython-sql extension and establish a connection
+with the database
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} sql
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Enter the connection string for your Db2 on Cloud database instance below}
+        \PY{c+c1}{\PYZsh{} \PYZpc{}sql ibm\PYZus{}db\PYZus{}sa://my\PYZhy{}username:my\PYZhy{}password@my\PYZhy{}hostname:my\PYZhy{}port/my\PYZhy{}db\PYZhy{}name/}
+        \PY{o}{\PYZpc{}}\PY{k}{sql} ibm\PYZus{}db\PYZus{}sa://hcg90289:bw10zlmgx7crb\PYZhy{}gb@dashdb\PYZhy{}txn\PYZhy{}sbox\PYZhy{}yp\PYZhy{}dal09\PYZhy{}04.services.dal.bluemix.net:50000/BLUDB
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:} 'Connected: hcg90289@BLUDB'
+\end{Verbatim}
+            
+    \subsubsection{Query the database system catalog to retrieve table
+metadata}\label{query-the-database-system-catalog-to-retrieve-table-metadata}
+
+\subparagraph{You can verify that the table creation was successful by
+retrieving the list of all tables in your schema and checking whether
+the SCHOOLS table was
+created}\label{you-can-verify-that-the-table-creation-was-successful-by-retrieving-the-list-of-all-tables-in-your-schema-and-checking-whether-the-schools-table-was-created}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{} type in your query to retrieve list of all tables in the database for your db2 schema (username)}
+         \PY{o}{\PYZpc{}}\PY{k}{sql} select TABSCHEMA, TABNAME, CREATE\PYZus{}TIME from SYSCAT.TABLES where TABSCHEMA=\PYZsq{}Db2\PYZhy{}bo\PYZsq{}
+         \PY{o}{\PYZpc{}}\PY{k}{sql} select * from SYSCAT.TABLES where TABNAME = \PYZsq{}SCHOOLS\PYZsq{}
+         \PY{c+c1}{\PYZsh{} \PYZpc{}sql select TABSCHEMA, TABNAME, CREATE\PYZus{}TIME from SYSCAT.TABLES \PYZbs{}}
+         \PY{c+c1}{\PYZsh{}      where TABSCHEMA not in (\PYZsq{}SYSIBM\PYZsq{}, \PYZsq{}SYSCAT\PYZsq{}, \PYZsq{}SYSSTAT\PYZsq{}, \PYZsq{}SYSIBMADM\PYZsq{}, \PYZsq{}SYSTOOLS\PYZsq{}, \PYZsq{}SYSPUBLIC\PYZsq{})}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} [('HCG90289', 'SCHOOLS', 'HCG90289', 'U', 'T', 'N', None, None, None, None, datetime.datetime(2018, 11, 28, 23, 57, 31, 337007), datetime.datetime(2018, 11, 28, 23, 57, 31, 337007), datetime.datetime(2018, 11, 28, 23, 57, 31, 337007), datetime.datetime(2018, 11, 29, 0, 2, 18, 951928), 79, 4, 788, 566, 15, 0, 16, -1, -1, -1, 0, 'hcg90289space1', None, None, 0, 0, 0, 0, 0, 0, 0, 'N', 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY', 1, ' ', '0', -1, 'N', ' ', None, 'R', ' ', 'N', '                                ', None, 'N', ' ', 'F', None, 0, 'N', 999, 0, 0.0, 831, 0.0, None, 1208, 'SYSIBM', 'IDENTITY', 'SYSIBM', 'IDENTITY', ' ', 0, datetime.datetime(2018, 11, 28, 23, 57, 31, 337007), 0, ' ', None, None, 'N', 'HCG90289', ' ', ' ', ' ', datetime.date(2018, 12, 1), ' ', 'N', 'R', 'N', -1.0, None)]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for a hint
+
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Query the database system catalog to retrieve column
+metadata}\label{query-the-database-system-catalog-to-retrieve-column-metadata}
+
+\subparagraph{The SCHOOLS table contains a large number of columns. How
+many columns does this table
+have?}\label{the-schools-table-contains-a-large-number-of-columns.-how-many-columns-does-this-table-have}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} type in your query to retrieve the number of columns in the SCHOOLS table}
+        \PY{o}{\PYZpc{}}\PY{k}{sql} select count(*) from SYSCAT.COLUMNS where TABNAME = \PYZsq{}SCHOOLS\PYZsq{}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} [(Decimal('79'),)]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for a hint
+
+    Double-click \textbf{here} for the solution.
+
+    Now retrieve the the list of columns in SCHOOLS table and their column
+type (datatype) and length.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} type in your query to retrieve all column names in the SCHOOLS table along with their datatypes and length}
+        \PY{c+c1}{\PYZsh{} \PYZpc{}sql select COLNAME, TYPENAME, LENGTH from SYSCAT.COLUMNS where TABNAME = \PYZsq{}SCHOOLS\PYZsq{}}
+        \PY{o}{\PYZpc{}}\PY{k}{sql} select distinct(NAME), COLTYPE, LENGTH from SYSIBM.SYSCOLUMNS where TBNAME = \PYZsq{}SCHOOLS\PYZsq{}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} [('10th Grade PLAN (2009)', 'VARCHAR ', 4),
+         ('10th Grade PLAN (2010)', 'VARCHAR ', 4),
+         ('11th Grade Average ACT (2011)', 'VARCHAR ', 4),
+         ('9th Grade EXPLORE (2009)', 'VARCHAR ', 4),
+         ('9th Grade EXPLORE (2010)', 'VARCHAR ', 4),
+         ('Adequate\_Yearly\_Progress\_Made\_', 'VARCHAR ', 3),
+         ('Average\_Student\_Attendance', 'DECIMAL ', 4),
+         ('Average\_Teacher\_Attendance', 'DECIMAL ', 4),
+         ('CPS\_Performance\_Policy\_Level', 'VARCHAR ', 15),
+         ('CPS\_Performance\_Policy\_Status', 'VARCHAR ', 16),
+         ('City', 'VARCHAR ', 7),
+         ('Collaborative\_Name', 'VARCHAR ', 34),
+         ('College\_Eligibility\_\_', 'VARCHAR ', 4),
+         ('College\_Enrollment\_Rate\_\_', 'VARCHAR ', 4),
+         ('College\_Enrollment\_\_number\_of\_students\_', 'SMALLINT', 2),
+         ('Community\_Area\_Name', 'VARCHAR ', 22),
+         ('Community\_Area\_Number', 'SMALLINT', 2),
+         ('Elementary, Middle, or High School', 'VARCHAR ', 2),
+         ('Environment\_Icon', 'VARCHAR ', 11),
+         ('Environment\_Score', 'SMALLINT', 2),
+         ('Family\_Involvement\_Icon', 'VARCHAR ', 11),
+         ('Family\_Involvement\_Score', 'VARCHAR ', 3),
+         ('Freshman\_on\_Track\_Rate\_\_', 'VARCHAR ', 4),
+         ('General\_Services\_Route', 'SMALLINT', 2),
+         ('Gr3\_5\_Grade\_Level\_Math\_\_', 'VARCHAR ', 4),
+         ('Gr3\_5\_Grade\_Level\_Read\_\_', 'VARCHAR ', 4),
+         ('Gr3\_5\_Keep\_Pace\_Math\_\_', 'VARCHAR ', 4),
+         ('Gr3\_5\_Keep\_Pace\_Read\_\_', 'VARCHAR ', 4),
+         ('Gr6\_8\_Grade\_Level\_Math\_\_', 'VARCHAR ', 4),
+         ('Gr6\_8\_Grade\_Level\_Read\_\_', 'VARCHAR ', 4),
+         ('Gr6\_8\_Keep\_Pace\_Math\_', 'VARCHAR ', 4),
+         ('Gr6\_8\_Keep\_Pace\_Read\_\_', 'VARCHAR ', 4),
+         ('Gr\_8\_Explore\_Math\_\_', 'VARCHAR ', 4),
+         ('Gr\_8\_Explore\_Read\_\_', 'VARCHAR ', 4),
+         ('Graduation\_Rate\_\_', 'VARCHAR ', 4),
+         ('Healthy\_Schools\_Certified\_', 'VARCHAR ', 3),
+         ('ISAT\_Exceeding\_Math\_\_', 'DECIMAL ', 4),
+         ('ISAT\_Exceeding\_Reading\_\_', 'DECIMAL ', 4),
+         ('ISAT\_Value\_Add\_Color\_Math', 'VARCHAR ', 6),
+         ('ISAT\_Value\_Add\_Color\_Read', 'VARCHAR ', 6),
+         ('ISAT\_Value\_Add\_Math', 'DECIMAL ', 3),
+         ('ISAT\_Value\_Add\_Read', 'DECIMAL ', 3),
+         ('Individualized\_Education\_Program\_Compliance\_Rate', 'DECIMAL ', 5),
+         ('Instruction\_Icon', 'VARCHAR ', 11),
+         ('Instruction\_Score', 'SMALLINT', 2),
+         ('Latitude', 'DECIMAL ', 18),
+         ('Leaders\_Icon', 'VARCHAR ', 11),
+         ('Leaders\_Score', 'VARCHAR ', 3),
+         ('Link', 'VARCHAR ', 78),
+         ('Location', 'VARCHAR ', 27),
+         ('Longitude', 'DECIMAL ', 18),
+         ('Name\_of\_School', 'VARCHAR ', 65),
+         ('Net\_Change\_EXPLORE\_and\_PLAN', 'VARCHAR ', 3),
+         ('Net\_Change\_PLAN\_and\_ACT', 'VARCHAR ', 3),
+         ('Network\_Manager', 'VARCHAR ', 40),
+         ('Parent\_Engagement\_Icon', 'VARCHAR ', 7),
+         ('Parent\_Engagement\_Score', 'VARCHAR ', 3),
+         ('Parent\_Environment\_Icon', 'VARCHAR ', 7),
+         ('Parent\_Environment\_Score', 'VARCHAR ', 3),
+         ('Phone\_Number', 'VARCHAR ', 14),
+         ('Pk\_2\_Literacy\_\_', 'VARCHAR ', 4),
+         ('Pk\_2\_Math\_\_', 'VARCHAR ', 4),
+         ('Police\_District', 'SMALLINT', 2),
+         ('RCDTS\_Code', 'BIGINT  ', 8),
+         ('Rate\_of\_Misconducts\_\_per\_100\_students\_', 'DECIMAL ', 5),
+         ('Safety\_Icon', 'VARCHAR ', 11),
+         ('Safety\_Score', 'SMALLINT', 2),
+         ('School\_ID', 'INTEGER ', 4),
+         ('State', 'VARCHAR ', 2),
+         ('Street\_Address', 'VARCHAR ', 30),
+         ('Students\_Passing\_\_Algebra\_\_', 'VARCHAR ', 4),
+         ('Students\_Taking\_\_Algebra\_\_', 'VARCHAR ', 4),
+         ('Teachers\_Icon', 'VARCHAR ', 11),
+         ('Teachers\_Score', 'VARCHAR ', 3),
+         ('Track\_Schedule', 'VARCHAR ', 12),
+         ('Ward', 'SMALLINT', 2),
+         ('X\_COORDINATE', 'DECIMAL ', 13),
+         ('Y\_COORDINATE', 'DECIMAL ', 13),
+         ('ZIP\_Code', 'INTEGER ', 4)]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Questions}\label{questions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Is the column name for the "SCHOOL ID" attribute in upper or mixed
+  case?
+\item
+  What is the "Community Area Name" field called in your table? Have the
+  spaces " " between the words been replaced by some other character?
+\item
+  Have the paranthesis (round brackets) in the "College Enrollment
+  (number of students)" attribute been replaced by some other character?
+\item
+  Are there any columns in whose names the spaces and paranthesis (round
+  brackets) have not been replaced by the underscore character "\_"?
+\end{enumerate}
+
+    \subsection{Problems}\label{problems}
+
+\subsubsection{Problem 1}\label{problem-1}
+
+\subparagraph{How many Elementary Schools are in the
+dataset?}\label{how-many-elementary-schools-are-in-the-dataset}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} select count(*) from SCHOOLS where \PYZdq{}Elementary, Middle, or High School\PYZdq{} = \PYZsq{}ES\PYZsq{}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} [(Decimal('462'),)]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for a hint
+
+    Double-click \textbf{here} for another hint
+
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Problem 2}\label{problem-2}
+
+\subparagraph{What is the highest Safety
+Score?}\label{what-is-the-highest-safety-score}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} select MAX(\PYZdq{}Safety\PYZus{}Score\PYZdq{}) AS MAX\PYZus{}SAFETY\PYZus{}SCORE from SCHOOLS
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} [(99,)]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for a hint
+
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Problem 3}\label{problem-3}
+
+\subparagraph{Which schools have highest Safety
+Score?}\label{which-schools-have-highest-safety-score}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} select \PYZdq{}Name\PYZus{}of\PYZus{}School\PYZdq{}, \PYZdq{}Safety\PYZus{}Score\PYZdq{} from SCHOOLS where \PYZbs{}
+           \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Safety\PYZus{}Score}\PY{l+s+s2}{\PYZdq{}}\PY{o}{=} \PY{p}{(}\PY{n}{select} \PY{n}{MAX}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Safety\PYZus{}Score}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k+kn}{from} \PY{n+nn}{SCHOOLS}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} [('Abraham Lincoln Elementary School', 99),
+          ('Alexander Graham Bell Elementary School', 99),
+          ('Annie Keller Elementary Gifted Magnet School', 99),
+          ('Augustus H Burley Elementary School', 99),
+          ('Edgar Allan Poe Elementary Classical School', 99),
+          ('Edgebrook Elementary School', 99),
+          ('Ellen Mitchell Elementary School', 99),
+          ('James E McDade Elementary Classical School', 99),
+          ('James G Blaine Elementary School', 99),
+          ('LaSalle Elementary Language Academy', 99),
+          ('Mary E Courtenay Elementary Language Arts Center', 99),
+          ('Northside College Preparatory High School', 99),
+          ('Northside Learning Center High School', 99),
+          ('Norwood Park Elementary School', 99),
+          ('Oriole Park Elementary School', 99),
+          ('Sauganash Elementary School', 99),
+          ('Stephen Decatur Classical Elementary School', 99),
+          ('Talman Elementary School', 99),
+          ('Wildwood Elementary School', 99)]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Problem 4}\label{problem-4}
+
+\subparagraph{What are the top 10 schools with the highest "Average
+Student
+Attendance"?}\label{what-are-the-top-10-schools-with-the-highest-average-student-attendance}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} select \PYZdq{}Name\PYZus{}of\PYZus{}School\PYZdq{}, \PYZdq{}Average\PYZus{}Student\PYZus{}Attendance\PYZdq{} from SCHOOLS \PYZbs{}
+             \PY{n}{order} \PY{n}{by} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Average\PYZus{}Student\PYZus{}Attendance}\PY{l+s+s2}{\PYZdq{}} \PY{n}{desc} \PY{n}{nulls} \PY{n}{last} \PY{n}{limit} \PY{l+m+mi}{10} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} [('John Charles Haines Elementary School', Decimal('98.4')),
+          ('James Ward Elementary School', Decimal('97.8')),
+          ('Edgar Allan Poe Elementary Classical School', Decimal('97.6')),
+          ('Orozco Fine Arts \& Sciences Elementary School', Decimal('97.6')),
+          ('Rachel Carson Elementary School', Decimal('97.6')),
+          ('Annie Keller Elementary Gifted Magnet School', Decimal('97.5')),
+          ('Andrew Jackson Elementary Language Academy', Decimal('97.4')),
+          ('Lenart Elementary Regional Gifted Center', Decimal('97.4')),
+          ('Disney II Magnet School', Decimal('97.3')),
+          ('John H Vanderpoel Elementary Magnet School', Decimal('97.2'))]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Problem 5}\label{problem-5}
+
+\subparagraph{Retrieve the list of 5 Schools with the lowest Average
+Student Attendance sorted in ascending order based on
+attendance}\label{retrieve-the-list-of-5-schools-with-the-lowest-average-student-attendance-sorted-in-ascending-order-based-on-attendance}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} SELECT \PYZdq{}Name\PYZus{}of\PYZus{}School\PYZdq{}, \PYZdq{}Average\PYZus{}Student\PYZus{}Attendance\PYZdq{}  \PYZbs{}
+              \PY{k+kn}{from} \PY{n+nn}{SCHOOLS} \PYZbs{}
+              \PY{n}{order} \PY{n}{by} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Average\PYZus{}Student\PYZus{}Attendance}\PY{l+s+s2}{\PYZdq{}} \PYZbs{}
+              \PY{n}{fetch} \PY{n}{first} \PY{l+m+mi}{5} \PY{n}{rows} \PY{n}{only}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} [('Richard T Crane Technical Preparatory High School', Decimal('57.9')),
+          ('Barbara Vick Early Childhood \& Family Center', Decimal('60.9')),
+          ('Dyett High School', Decimal('62.5')),
+          ('Wendell Phillips Academy High School', Decimal('63.0')),
+          ('Orr Academy High School', Decimal('66.3'))]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Problem 6}\label{problem-6}
+
+\subparagraph{Now remove the '\%' sign from the above result set for
+Average Student Attendance
+column}\label{now-remove-the-sign-from-the-above-result-set-for-average-student-attendance-column}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} SELECT \PYZdq{}Name\PYZus{}of\PYZus{}School\PYZdq{}, REPLACE(\PYZdq{}Average\PYZus{}Student\PYZus{}Attendance\PYZdq{}, \PYZsq{}\PYZpc{}\PYZsq{}, \PYZsq{}\PYZsq{}) \PYZbs{}
+              \PY{k+kn}{from} \PY{n+nn}{SCHOOLS} \PYZbs{}
+              \PY{n}{order} \PY{n}{by} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Average\PYZus{}Student\PYZus{}Attendance}\PY{l+s+s2}{\PYZdq{}} \PYZbs{}
+              \PY{n}{fetch} \PY{n}{first} \PY{l+m+mi}{5} \PY{n}{rows} \PY{n}{only}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} [('Richard T Crane Technical Preparatory High School', '57.9'),
+          ('Barbara Vick Early Childhood \& Family Center', '60.9'),
+          ('Dyett High School', '62.5'),
+          ('Wendell Phillips Academy High School', '63.0'),
+          ('Orr Academy High School', '66.3')]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for a hint
+
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Problem 7}\label{problem-7}
+
+\subparagraph{Which Schools have Average Student Attendance lower than
+70\%?}\label{which-schools-have-average-student-attendance-lower-than-70}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} SELECT \PYZdq{}Name\PYZus{}of\PYZus{}School\PYZdq{}, \PYZdq{}Average\PYZus{}Student\PYZus{}Attendance\PYZdq{}  \PYZbs{}
+              \PY{k+kn}{from} \PY{n+nn}{SCHOOLS} \PYZbs{}
+              \PY{n}{where} \PY{n}{CAST} \PY{p}{(} \PY{n}{REPLACE}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Average\PYZus{}Student\PYZus{}Attendance}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{n}{AS} \PY{n}{DOUBLE} \PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mi}{70} \PYZbs{}
+              \PY{n}{order} \PY{n}{by} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Average\PYZus{}Student\PYZus{}Attendance}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:} [('Richard T Crane Technical Preparatory High School', Decimal('57.9')),
+          ('Barbara Vick Early Childhood \& Family Center', Decimal('60.9')),
+          ('Dyett High School', Decimal('62.5')),
+          ('Wendell Phillips Academy High School', Decimal('63.0')),
+          ('Orr Academy High School', Decimal('66.3')),
+          ('Manley Career Academy High School', Decimal('66.8')),
+          ('Chicago Vocational Career Academy High School', Decimal('68.8')),
+          ('Roberto Clemente Community Academy High School', Decimal('69.6'))]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for a hint
+
+    Double-click \textbf{here} for another hint
+
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Problem 8}\label{problem-8}
+
+\subparagraph{\texorpdfstring{Get the total \textbf{College Enrollment
+(number of students)} for each Community
+Area}{Get the total College Enrollment (number of students) for each Community Area}}\label{get-the-total-college-enrollment-number-of-students-for-each-community-area}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} select \PYZdq{}Community\PYZus{}Area\PYZus{}Name\PYZdq{}, sum(\PYZdq{}College\PYZus{}Enrollment\PYZus{}\PYZus{}number\PYZus{}of\PYZus{}students\PYZus{}\PYZdq{}) AS TOTAL\PYZus{}ENROLLMENT \PYZbs{}
+            \PY{k+kn}{from} \PY{n+nn}{SCHOOLS} \PYZbs{}
+            \PY{n}{group} \PY{n}{by} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Community\PYZus{}Area\PYZus{}Name}\PY{l+s+s2}{\PYZdq{}} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} [('ALBANY PARK', 6864),
+          ('ARCHER HEIGHTS', 4823),
+          ('ARMOUR SQUARE', 1458),
+          ('ASHBURN', 6483),
+          ('AUBURN GRESHAM', 4175),
+          ('AUSTIN', 10933),
+          ('AVALON PARK', 1522),
+          ('AVONDALE', 3640),
+          ('BELMONT CRAGIN', 14386),
+          ('BEVERLY', 1636),
+          ('BRIDGEPORT', 3167),
+          ('BRIGHTON PARK', 9647),
+          ('BURNSIDE', 549),
+          ('CALUMET HEIGHTS', 1568),
+          ('CHATHAM', 5042),
+          ('CHICAGO LAWN', 7086),
+          ('CLEARING', 2085),
+          ('DOUGLAS', 4670),
+          ('DUNNING', 4568),
+          ('EAST GARFIELD PARK', 5337),
+          ('EAST SIDE', 5305),
+          ('EDGEWATER', 4600),
+          ('EDISON PARK', 910),
+          ('ENGLEWOOD', 6832),
+          ('FOREST GLEN', 1431),
+          ('FULLER PARK', 531),
+          ('GAGE PARK', 9915),
+          ('GARFIELD RIDGE', 4552),
+          ('GRAND BOULEVARD', 2809),
+          ('GREATER GRAND CROSSING', 4051),
+          ('HEGEWISCH', 963),
+          ('HERMOSA', 3975),
+          ('HUMBOLDT PARK', 8620),
+          ('HYDE PARK', 1930),
+          ('IRVING PARK', 7764),
+          ('JEFFERSON PARK', 1755),
+          ('KENWOOD', 4287),
+          ('LAKE VIEW', 7055),
+          ('LINCOLN PARK', 5615),
+          ('LINCOLN SQUARE', 4132),
+          ('LOGAN SQUARE', 7351),
+          ('LOOP', 871),
+          ('LOWER WEST SIDE', 7257),
+          ('MCKINLEY PARK', 1552),
+          ('MONTCLARE', 1317),
+          ('MORGAN PARK', 3271),
+          ('MOUNT GREENWOOD', 2091),
+          ('NEAR NORTH SIDE', 3362),
+          ('NEAR SOUTH SIDE', 1378),
+          ('NEAR WEST SIDE', 7975),
+          ('NEW CITY', 7922),
+          ('NORTH CENTER', 7541),
+          ('NORTH LAWNDALE', 5146),
+          ('NORTH PARK', 4210),
+          ('NORWOOD PARK', 6469),
+          ('OAKLAND', 140),
+          ('OHARE', 786),
+          ('PORTAGE PARK', 6954),
+          ('PULLMAN', 1620),
+          ('RIVERDALE', 1547),
+          ('ROGERS PARK', 4068),
+          ('ROSELAND', 7020),
+          ('SOUTH CHICAGO', 4043),
+          ('SOUTH DEERING', 1859),
+          ('SOUTH LAWNDALE', 14793),
+          ('SOUTH SHORE', 4543),
+          ('UPTOWN', 4388),
+          ('WASHINGTON HEIGHTS', 4006),
+          ('WASHINGTON PARK', 2648),
+          ('WEST ELSDON', 3700),
+          ('WEST ENGLEWOOD', 5946),
+          ('WEST GARFIELD PARK', 2622),
+          ('WEST LAWN', 4207),
+          ('WEST PULLMAN', 3240),
+          ('WEST RIDGE', 8197),
+          ('WEST TOWN', 9429),
+          ('WOODLAWN', 4206)]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for a hint
+
+    Double-click \textbf{here} for another hint
+
+    Double-click \textbf{here} for the solution.
+
+    \subsubsection{Problem 9}\label{problem-9}
+
+\subparagraph{\texorpdfstring{Get the 5 Community Areas with the least
+total \textbf{College Enrollment (number of students)} sorted in
+ascending
+order}{Get the 5 Community Areas with the least total College Enrollment (number of students) sorted in ascending order}}\label{get-the-5-community-areas-with-the-least-total-college-enrollment-number-of-students-sorted-in-ascending-order}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{o}{\PYZpc{}}\PY{k}{sql} select \PYZdq{}Community\PYZus{}Area\PYZus{}Name\PYZdq{}, sum(\PYZdq{}College\PYZus{}Enrollment\PYZus{}\PYZus{}number\PYZus{}of\PYZus{}students\PYZus{}\PYZdq{}) AS TOTAL\PYZus{}ENROLLMENT \PYZbs{}
+            \PY{k+kn}{from} \PY{n+nn}{SCHOOLS} \PYZbs{}
+            \PY{n}{group} \PY{n}{by} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Community\PYZus{}Area\PYZus{}Name}\PY{l+s+s2}{\PYZdq{}} \PYZbs{}
+            \PY{n}{order} \PY{n}{by} \PY{n}{TOTAL\PYZus{}ENROLLMENT} \PY{n}{asc} \PYZbs{}
+            \PY{n}{fetch} \PY{n}{first} \PY{l+m+mi}{5} \PY{n}{rows} \PY{n}{only}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ * ibm\_db\_sa://hcg90289:***@dashdb-txn-sbox-yp-dal09-04.services.dal.bluemix.net:50000/BLUDB
+Done.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:} [('OAKLAND', 140),
+          ('FULLER PARK', 531),
+          ('BURNSIDE', 549),
+          ('OHARE', 786),
+          ('LOOP', 871)]
+\end{Verbatim}
+            
+    Double-click \textbf{here} for a hint
+
+    Double-click \textbf{here} for the solution.
+
+    \subsection{Summary}\label{summary}
+
+\subparagraph{In this lab you learned how to work with a real word
+dataset using SQL and Python. You learned how to query columns with
+spaces or special characters in their names and with mixed names. You
+also used built in database
+functions.}\label{in-this-lab-you-learned-how-to-work-with-a-real-word-dataset-using-sql-and-python.-you-learned-how-to-query-columns-with-spaces-or-special-characters-in-their-names-and-with-mixed-names.-you-also-used-built-in-database-functions.}
+
+    Copyright © 2018
+\href{cognitiveclass.ai?utm_source=bducopyrightlink\&utm_medium=dswb\&utm_campaign=bdu}{cognitiveclass.ai}.
+This notebook and its source code are released under the terms of the
+\href{https://bigdatauniversity.com/mit-license/}{MIT License}.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
